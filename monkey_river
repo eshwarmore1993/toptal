@@ -1,0 +1,41 @@
+public class RiverCrosser
+    {
+        public int cross(int[] oldarr,int d)
+        {
+            int n = oldarr.Length;
+            int[] arr = new int[n+1];
+            Array.Copy(oldarr, arr,n);
+            arr[n] = 0;
+
+            int[] timeTakenToReachIPosition = new int[n+1];
+
+            for(int i=0; i<d;i++){
+                        timeTakenToReachIPosition[i] = arr[i];
+            }
+
+            for (int i = d; i < n+1;i++ )
+            {
+                timeTakenToReachIPosition[i] = Int16.MaxValue;
+                if(arr[i]!=-1) // stone is present at any time
+                {
+                    for (int j = i-1; j >=0 && i-j <= d ; j--)
+                    {
+                        if (timeTakenToReachIPosition[j]!=-1 && timeTakenToReachIPosition[j] < timeTakenToReachIPosition[i])
+                        {
+                            timeTakenToReachIPosition[i] = timeTakenToReachIPosition[j];
+                        }
+                    }
+
+                    if(arr[i] > timeTakenToReachIPosition[i])
+                    {
+                        timeTakenToReachIPosition[i] = arr[i];
+                    }
+                }
+                if (timeTakenToReachIPosition[i] == Int16.MaxValue)
+                {
+                    timeTakenToReachIPosition[i] = -1;
+                }
+            }
+            return timeTakenToReachIPosition[n];
+        }
+    }
